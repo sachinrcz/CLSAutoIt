@@ -6,26 +6,30 @@
 #include <Excel.au3>
 #include <Helper.au3>
 #include <WinAPIFiles.au3>
-
-Example()
-Exit
-Func Example()
-    ; Create a constant variable in Local scope of the filepath that will be read/written to.
-    Local Const $sFilePath = _WinAPI_GetTempFileName(@ScriptDir & "\password.ini")
-
-   MsgBox($MB_SYSTEMMODAL, "", @ScriptDir & "\password.ini")
-    ; Read the INI file for the value of 'Title' in the section labelled 'General'.
-    Local $sRead = IniRead(@ScriptDir & "\password.ini", "Password", "key", "Password")
-
-    ; Display the value returned by IniRead.
-    MsgBox($MB_SYSTEMMODAL, "",  $sRead)
-
-
-EndFunc   ;==>Example
-
-
 Local $logfile = "S:\Sachin\C2\OvernightLogs\26 July\AI_Watcher_2017_07_25.log"
 Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\26 July"
+ Local $hWnd = WinWait("CM-8.7", "", 10)
+
+    ; Set the edit control in Notepad with some text. The handle returned by WinWait is used for the "title" parameter of ControlSetText.
+   ; ControlSetText($hWnd, "", "Edit1", "This is some text")
+
+    ; Retrieve the text of the edit control in Notepad. The handle returned by WinWait is used for the "title" parameter of ControlGetText.
+    Local $sText = ControlGetText($hWnd, "", "[CLASS:wxWindowClass]")
+
+    ; Display the text of the edit control.
+    ;MsgBox($MB_SYSTEMMODAL, "", "The text in Edit1 is: " & $sText)
+   WinActivate($hWnd)
+   capture($screenfolder)
+    ; Close the Notepad window using the handle returned by WinWait.
+    ;WinClose($hWnd)
+
+
+
+Exit
+
+checkTriggerImportCLS($logfile, $screenfolder)
+Exit
+
 
 Local $iPID = Run("F:\CLSInc\WBWIN\BRClient64.exe")
 enterPassword($logfile, $screenfolder)

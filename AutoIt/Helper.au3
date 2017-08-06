@@ -29,6 +29,45 @@ Func enterPassword($logfile,$screenfolder);
 	WEnd
  EndFunc
 
+
+ Func checkTriggerImportCLS($logfile, $screenfolder);
+   _FileWriteLog($logfile,"Checking If Trigger Still Importing")
+	Local $i = 1
+	While $i > 0
+		 ;WinWait("CM-8.7", "", 30)
+		 Sleep(2000)
+		 Local $hWnd = WinGetHandle("Batch Word Processing")
+		If @error Then
+			;MsgBox($MB_SYSTEMMODAL, "","CLS Window not found. End of Script")
+			_FileWriteLog($logfile, "CLS Window not found. Means Trigger import is complete")
+			ExitLoop
+		 EndIf
+
+		WinActivate($hWnd)
+		Local $sText =WinGetText("Batch Word Processing")
+		Local $split = StringSplit($sText, "Source Information",$STR_ENTIRESPLIT)
+		$temp = StringMid($split[2], 1)
+		$split = StringSplit($temp, "---",$STR_ENTIRESPLIT)
+		 $temp = StringMid($split[1], 1)
+		_FileWriteLog($logfile,$temp)
+
+		$sText =WinGetText("CM-8.7")
+		$i = StringInStr($sText, "SELECT")
+		If $i > 0 Then
+			_FileWriteLog($logfile,"Claim Not Found Screen Exist")
+			capture($screenfolder)
+			WinActivate($hWnd)
+			key("{Enter}")
+
+		 EndIf
+		 _FileWriteLog($logfile,"Checking Again")
+	WEnd
+	_FileWriteLog($logfile,"Overnight Trigger Import Check Complete")
+	capture($screenfolder)
+
+EndFunc
+
+
 Func useCMD($logfile) ;
    _FileWriteLog($logfile,"Using CMD")
    Local $hWnd = WinGetHandle("C:\WINDOWS\SYSTEM32\cmd.exe")
@@ -85,8 +124,7 @@ Func waitmergecomplete($logfile,$screenfolder) ;
 	WEnd
 	_FileWriteLog($logfile,"Word Merge Complete")
 	capture($screenfolder)
-	WinActivate($hWnd)
-	key("{ESC}")
+
 
 EndFunc
 
