@@ -9,10 +9,12 @@
 
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
-
+Local $editype = $CmdLine[3]
+sendUpdate($logfile,"last_update=Watcher activated")
 enterPassword($logfile , $screenfolder)
+sendUpdate($logfile,"last_update="& $editype & " started")
 watch()
-
+sendUpdate($logfile,"last_update="& $editype & " completed")
 
 Func watch();
 	While 1
@@ -33,6 +35,7 @@ Func watch();
 				_FileWriteLog($logfile, WinGetText("CM-8.7"))
 			Else
 				_FileWriteLog($logfile, $temp & " ")
+				sendUpdate($logfile,"last_update="& $editype & " " & $temp & " ")
 			EndIf
 
 		capture($screenfolder)

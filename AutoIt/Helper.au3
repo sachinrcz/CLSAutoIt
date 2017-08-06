@@ -7,7 +7,13 @@
 
 Func enterPassword($logfile,$screenfolder);
 	_FileWriteLog($logfile,"Waiting for Password PopUp")
+	;sendUpdate($logfile,"last_update="& "Waiting Password PopUp")
 	While 1
+	    If isCLSOpen($logfile,$screenfolder) Then
+		   _FileWriteLog($logfile,"Login Complete")
+		   capture($screenfolder)
+		   ExitLoop
+		EndIf
 		WinWait("Business Rules! Connect", "", 10)
 		Local $hWnd = WinGetHandle("Business Rules! Connect")
 
@@ -21,13 +27,30 @@ Func enterPassword($logfile,$screenfolder);
 		Local $password = IniRead(@ScriptDir & "\password.ini", "Password", "key", "123456")
 		Send($password)
 		Send("{Enter}")
-		_FileWriteLog($logfile,"Login Complete")
-		sleep(20000)
-		capture($screenfolder)
-		ExitLoop
+		 sleep(30000)
+		 If isCLSOpen($logfile,$screenfolder) Then
+		   _FileWriteLog($logfile,"Login Complete")
+		   capture($screenfolder)
+		   ExitLoop
+		Else
+		   _FileWriteLog($logfile,"Login Failed")
+		   capture($screenfolder)
+		   MsgBox($MB_SYSTEMMODAL, "","Log In Failed")
+		 EndIf
 
 	WEnd
  EndFunc
+
+Func isCLSOpen($logfile,$screenfolder);
+		 Local $hWnd = WinGetHandle("CM-8.7")
+		If @error Then
+			;MsgBox($MB_SYSTEMMODAL, "","CLS Window not found. End of Script")
+			_FileWriteLog($logfile, "CLS Window not found. End of Script")
+			Return False
+		 EndIf
+		 Return True
+
+EndFunc
 
 
  Func checkTriggerImportCLS($logfile, $screenfolder);
@@ -55,6 +78,7 @@ Func enterPassword($logfile,$screenfolder);
 		$i = StringInStr($sText, "SELECT")
 		If $i > 0 Then
 			_FileWriteLog($logfile,"Claim Not Found Screen Exist")
+			sendUpdate($logfile,"last_update="& "Claim Not Found")
 			capture($screenfolder)
 			WinActivate($hWnd)
 			key("{Enter}")
@@ -91,11 +115,13 @@ EndFunc
 	   WinActivate($hWnd)
 	   Local $sText =WinGetText("CM-8.7")
 	    _FileWriteLog($logfile,"Index Active")
+		sendUpdate($logfile,"last_update=Index Active")
 		;_FileWriteLog($logfile,$sText)
 	   capture($screenfolder)
 	   sleep(60000)
 	WEnd
 	_FileWriteLog($logfile,"Index Complete")
+	sendUpdate($logfile,"last_update=Index Complete")
 	capture($screenfolder)
 EndFunc
 
@@ -119,6 +145,7 @@ Func waitmergecomplete($logfile,$screenfolder) ;
 		$i = StringInStr($sText, "EnterWP")
 		If $i > 0 Then
 			_FileWriteLog($logfile,"Word Merge Active")
+			sendUpdate($logfile,"last_update=Word Merge Active")
 			capture($screenfolder)
 		EndIf
 	WEnd
@@ -402,10 +429,45 @@ Func key($press);
 	sleep(1000)
 	Send($press)
 	sleep(1000)
-EndFunc
- Func capture($screenfolder) ;
+ EndFunc
+
+Func capture($screenfolder) ;
 
 	Local $screenfile = "\ScreenShot" & getstamp() & ".jpg"
 	 _ScreenCapture_Capture( $screenfolder & $screenfile )
 
+EndFunc
+
+
+Func getActive($logfile);
+_FileWriteLog($logfile,"Getting Active Dashboard ID")
+$oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
+$oHTTP.Open("GET", "http://192.168.147.44:8000/dashboard-api/active/", False)
+
+$oHTTP.Send()
+$oReceived = $oHTTP.ResponseText
+$oStatusCode = $oHTTP.Status
+_FileWriteLog($logfile,"Response Code:  "& $oStatusCode )
+_FileWriteLog($logfile,"ID:  "& $oReceived )
+Return $oReceived
+
+
+EndFunc
+
+
+Func sendUpdate($logfile,$msg);
+_FileWriteLog($logfile,"Sending Update: "& $msg)
+
+$oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
+$id = getActive($logfile)
+$uri = "http://192.168.147.44:8000/dashboard-api/" & $id & "/"
+$oHTTP.Open("PUT", $uri, False)
+$oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+
+; Performing the Request
+$oHTTP.Send($msg)
+$oReceived = $oHTTP.ResponseText
+$oStatusCode = $oHTTP.Status
+_FileWriteLog($logfile,"Response Code:  "& $oStatusCode )
+_FileWriteLog($logfile,"Response:  "& $oReceived )
 EndFunc
