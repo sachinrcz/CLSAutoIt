@@ -25,6 +25,9 @@ MOVE S:\CLS_Placements\PostJmt_Placement_toCLS\NightlyUpdates\CLS_OvernightDunni
 ECHO COMPLETE
 SCHTASKS /run /TN "NewClaim"
 SCHTASKS /run /TN "SendErrorReports"
-"S:\CLS_Placements\PostJmt_Placement_toCLS\NightlyUpdates\Archive ProcessedFiles.cmd"
+pause
+
 curl http://192.168.147.44:8000/CLS/dashboard-api/complete/
+pause
+"S:\CLS_Placements\PostJmt_Placement_toCLS\NightlyUpdates\Archive ProcessedFiles.cmd" 
 pause

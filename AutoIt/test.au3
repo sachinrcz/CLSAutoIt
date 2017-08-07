@@ -10,8 +10,7 @@
 
 Local $logfile = "S:\Sachin\C2\OvernightLogs\26 July\AI_Watcher_2017_07_25.log"
 Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\26 July"
-
-;enterPassword($logfile,$screenfolder)
-;sendUpdate($logfile,"last_update=Watcher activated")
-sendUpdate($logfile,"last_update="& "Word Merge Complete")
+pressKey($logfile,"y")
+useCMD($logfile)
+;startIndex($logfile,$screenfolder)
 

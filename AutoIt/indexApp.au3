@@ -7,5 +7,15 @@
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
 
-watchIndex($logfile,$screenfolder)
-useCMD($logfile)
+
+If startIndex($logfile,$screenfolder) Then
+   pressKey($logfile,"y")
+   watchIndex($logfile,$screenfolder)
+   useCMD($logfile)
+Else
+   useCMD($logfile)
+   _FileWriteLog($logfile,"Index Skipped")
+   Run(@ScriptDir & "\BatchFiles\DELETE_EXIT_CM.bat")
+   Run(@ScriptDir & "\BatchFiles\BATCH_EXPORT.bat")
+   Run(@ScriptDir & "\BatchFiles\Password.exe")
+EndIf
