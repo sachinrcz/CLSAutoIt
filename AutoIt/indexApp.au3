@@ -9,12 +9,13 @@ Local $screenfolder = $CmdLine[2]
 
 
 If startIndex($logfile,$screenfolder) Then
-   pressKey($logfile,"y")
+   pressKey($logfile,"y{Enter}")
    watchIndex($logfile,$screenfolder)
    useCMD($logfile)
 Else
    useCMD($logfile)
    _FileWriteLog($logfile,"Index Skipped")
+   sendUpdate($logfile,"remarks="& "No Index Run")
    Run(@ScriptDir & "\BatchFiles\DELETE_EXIT_CM.bat")
    Run(@ScriptDir & "\BatchFiles\BATCH_EXPORT.bat")
    Run(@ScriptDir & "\BatchFiles\Password.exe")

@@ -6,6 +6,7 @@
 
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
+
 sendUpdate($logfile,"last_update="& "NonCourtOpt New Claim")
 Local $iPID = Run("F:\CLSInc\WBWIN\BRClient64.exe")
 enterPassword($logfile, $screenfolder)

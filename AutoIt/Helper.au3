@@ -156,6 +156,9 @@ EndFunc
 Func pressKey($logfile, $key) ;
    _FileWriteLog($logfile,"Using CMD")
    Local $hWnd = WinGetHandle("C:\WINDOWS\system32\cmd.exe")
+			If @error Then
+			   $hWnd = WinGetHandle("C:\WINDOWS\SYSTEM32\cmd.exe")
+		   EndIf
    WinActivate($hWnd)
    key($key)
     _FileWriteLog($logfile,"Key " & $key & " Pressed")
@@ -164,6 +167,9 @@ EndFunc
 Func useCMD($logfile) ;
    _FileWriteLog($logfile,"Using CMD")
    Local $hWnd = WinGetHandle("C:\WINDOWS\system32\cmd.exe")
+			If @error Then
+			   $hWnd = WinGetHandle("C:\WINDOWS\SYSTEM32\cmd.exe")
+		   EndIf
    WinActivate($hWnd)
    key("{Enter}")
     _FileWriteLog($logfile,"Enter Presses")
@@ -540,14 +546,10 @@ Return $oReceived
 
 EndFunc
 
-
-
-Func sendUpdate($logfile,$msg);
+Func put_update($uri,$logfile,$msg);
 _FileWriteLog($logfile,"Sending Update: "& $msg)
 
 $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
-$id = getActive($logfile)
-$uri = "http://192.168.147.44:8000/dashboard-api/" & $id & "/"
 $oHTTP.Open("PUT", $uri, False)
 $oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 
@@ -557,4 +559,12 @@ $oReceived = $oHTTP.ResponseText
 $oStatusCode = $oHTTP.Status
 _FileWriteLog($logfile,"Response Code:  "& $oStatusCode )
 _FileWriteLog($logfile,"Response:  "& $oReceived )
+EndFunc
+
+
+Func sendUpdate($logfile,$msg);
+   $localuri = "http://192.168.147.44:8000/dashboard-api/"
+   $uri = "http://eec.mymailing.website/dashboard-api/"
+   put_update($localuri,$logfile,$msg)
+   put_update($uri,$logfile,$msg)
 EndFunc

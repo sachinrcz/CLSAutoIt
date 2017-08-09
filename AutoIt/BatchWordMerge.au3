@@ -9,7 +9,8 @@
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
 sendUpdate($logfile,"last_update="& "Trigger Import")
-enterPassword($logfile, $screenfolder)
+Run(@ScriptDir & "\BatchFiles\Password.exe")
+;~ enterPassword($logfile, $screenfolder)
 ;MsgBox($MB_SYSTEMMODAL, "","Click ok to start merge")
 sleep(30000)
 checkTriggerImportCLS($logfile, $screenfolder)
