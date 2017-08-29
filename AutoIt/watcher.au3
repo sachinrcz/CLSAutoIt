@@ -1,8 +1,5 @@
-#include <MsgBoxConstants.au3>
-#include <File.au3>
-#include <ScreenCapture.au3>
+
 #include <Helper.au3>
-#include <Date.au3>
 
 ;Local $logfile = "S:\Sachin\C2\OvernightLogs\26 July\AI_Watcher_2017_07_25.log"
 ;Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\26 July"
@@ -10,11 +7,10 @@
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
 Local $editype = $CmdLine[3]
-sendUpdate($logfile,"last_update=Watcher activated")
+;~ sendUpdate($logfile,"last_update=Watcher activated")
 enterPassword($logfile , $screenfolder)
 sendUpdate($logfile,"last_update="& $editype & " started")
 watch()
-sendUpdate($logfile,"last_update="& $editype & " completed")
 
 Func watch();
 	While 1
@@ -23,6 +19,8 @@ Func watch();
 		Local $hWnd = WinGetHandle("CM-8.7")
 			If @error Then
 				_FileWriteLog($logfile, "CLS Window not found. End of Script")
+				_FileWriteLog($logfile,$editype & " " &  "Complete")
+				sendUpdate($logfile,"last_update="& $editype & " " & "Complete")
 				Exit
 			EndIf
 		_FileWriteLog($logfile, $hWnd)

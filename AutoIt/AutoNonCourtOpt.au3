@@ -1,20 +1,19 @@
-#include <MsgBoxConstants.au3>
-#include <File.au3>
-#include <ScreenCapture.au3>
-#include <Helper.au3>
-#include <Date.au3>
+
+#include <FunctionsNewClaim.au3>
 
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
+;~ Local $logfile = "S:\Sachin\C2\OvernightLogs\11 August\AI_Watcher_2017_08_11.log"
+;~ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\11 August"
 
 sendUpdate($logfile,"last_update="& "NonCourtOpt New Claim")
 Local $iPID = Run("F:\CLSInc\WBWIN\BRClient64.exe")
 enterPassword($logfile, $screenfolder)
-
+sendUpdate($logfile,"last_update="& "NonCourtOpt Print Claim")
 Local $claimRes = printNewClaim($logfile, $screenfolder)
+
 If  $claimRes == 1 Then
    _FileWriteLog($logfile,"Print Claim Successful")
-   sendUpdate($logfile,"last_update="& "NonCourtOpt Print Claim")
    ;MsgBox($MB_SYSTEMMODAL, "","Print Claim Successful")
 
 Else
@@ -32,7 +31,7 @@ Else
 
 EndIf
 
-
+updateNewClaim($logfile,$screenfolder,"non_court_new_claim=")
 sendUpdate($logfile,"last_update="& "NonCourtOpt Assignment")
 assignment($logfile,$screenfolder)
 sendUpdate($logfile,"last_update="& "NonCourtOpt XNWCLAIM")
@@ -41,6 +40,7 @@ sendUpdate($logfile,"last_update="& "NonCourtOpt Reset")
 resetclaim($logfile,$screenfolder)
 sendUpdate($logfile,"last_update="& "NonCourtOpt Merge")
 startmerge($logfile,$screenfolder)
+sendUpdate($logfile,"last_update="& "NonCourtOpt Wait Merge")
 waitmergecomplete($logfile,$screenfolder)
 Local $hWnd = WinGetHandle("CM-8.7")
 WinActivate($hWnd)

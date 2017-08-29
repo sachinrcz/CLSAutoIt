@@ -1,8 +1,4 @@
-#include <MsgBoxConstants.au3>
-#include <File.au3>
-#include <ScreenCapture.au3>
-#include <Helper.au3>
-#include <Date.au3>
+#include <FunctionsNewClaim.au3>
 
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
@@ -12,17 +8,16 @@ sendUpdate($logfile,"last_update="& "CourtOpt New Claim")
 Local $iPID = Run("F:\CLSInc\WBWIN\BRClient64.exe")
 enterPassword($logfile, $screenfolder)
 
-
+sendUpdate($logfile,"last_update="& "CourtOpt Print Claim")
 Local $claimRes = printNewClaim($logfile, $screenfolder)
 If  $claimRes == 1 Then
    _FileWriteLog($logfile,"Print Claim Successful")
-   sendUpdate($logfile,"last_update="& "NonCourtOpt Print Claim")
    ;MsgBox($MB_SYSTEMMODAL, "","Print Claim Successful")
 
 Else
    If $claimRes == 0 Then
 	  _FileWriteLog($logfile,"Print Claim Failed Stopping Further Execution")
-	  sendUpdate($logfile,"last_update="& "NonCourtOpt Print Failed")
+	  sendUpdate($logfile,"last_update="& "CourtOpt Print Failed")
 	  useCMD($logfile)
 	  ;MsgBox($MB_SYSTEMMODAL, "","Print Claim Failed Stopping Further Execution")
 	  Exit
@@ -34,7 +29,7 @@ Else
 
 EndIf
 
-
+updateNewClaim($logfile,$screenfolder,"court_new_claim=")
 sendUpdate($logfile,"last_update="& "CourtOpt Assignment")
 assignmentCourt($logfile,$screenfolder)
 sendUpdate($logfile,"last_update="& "CourtOpt XNWCLAIM")
