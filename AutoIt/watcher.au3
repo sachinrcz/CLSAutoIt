@@ -1,9 +1,9 @@
 
 #include <Helper.au3>
 
-;Local $logfile = "S:\Sachin\C2\OvernightLogs\26 July\AI_Watcher_2017_07_25.log"
-;Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\26 July"
-
+;~ Local $logfile = "S:\Sachin\C2\OvernightLogs\30 August\AI_Watcher_2017_08_30.log"
+;~ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\30 August"
+;~ Local $editype = "NonCourtOpt"
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
 Local $editype = $CmdLine[3]

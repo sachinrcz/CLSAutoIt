@@ -121,12 +121,5 @@ Func moveToErrorFolder($logfile,$screenfolder,$folder, $screenfile);
    _FileWriteLog($logfile,$screenshot & " Copied to " & $errordir)
 EndFunc
 
-Func moveToErrorFolder($logfile,$screenfolder,$folder, $screenfile);
 
-   _FileWriteLog($logfile,"Moving to Error Folder")
-   $screenshot = $screenfolder & "\" & $screenfile
-   $errordir = "S:\Sachin\C2\Overnight Errors\" & $folder
-   FileCopy($screenshot, $errordir, $FC_OVERWRITE + $FC_CREATEPATH)
-   _FileWriteLog($logfile,$screenshot & " Copied to " & $errordir)
-EndFunc
 
