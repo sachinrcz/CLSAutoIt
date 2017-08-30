@@ -36,7 +36,7 @@ Func watch();
 				sendUpdate($logfile,"last_update="& $editype & " " & $temp & " ")
 			EndIf
 
-		capture($screenfolder)
+		capture($logfile,$screenfolder)
 
 	 WEnd
 

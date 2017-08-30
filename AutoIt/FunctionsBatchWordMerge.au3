@@ -30,7 +30,7 @@
 		If $i > 0 Then
 			_FileWriteLog($logfile,"Claim Not Found Screen Exist")
 			sendUpdate($logfile,"last_update="& "Claim Not Found")
-			capture($screenfolder)
+			capture($logfile,$screenfolder)
 			WinActivate($hWnd)
 			key("{Enter}")
 
@@ -38,7 +38,7 @@
 		 _FileWriteLog($logfile,"Checking Again")
 	WEnd
 	_FileWriteLog($logfile,"Overnight Trigger Import Check Complete")
-	capture($screenfolder)
+	capture($logfile,$screenfolder)
 
 EndFunc
 
@@ -47,7 +47,7 @@ Func updateBatchWordMerge($logfile,$screenfolder);
    _FileWriteLog($logfile,"Starting Batch Word Merge Update Module")
 
 ;~    $screenfile = "ScreenShot_6_08_17 AM.jpg"
-   $screenfile = capture($screenfolder)
+   $screenfile = capture($logfile,$screenfolder)
    $folder = StringSplit($screenfolder, "\")[5]
    $txt = readImage($folder, $screenfile)
 
@@ -98,11 +98,11 @@ Func waitmergecomplete($logfile,$screenfolder) ;
 		If $i > 0 Then
 			_FileWriteLog($logfile,"Word Merge Active")
 			sendUpdate($logfile,"last_update=Word Merge Active")
-			capture($screenfolder)
+			capture($logfile,$screenfolder)
 		EndIf
 	WEnd
 	_FileWriteLog($logfile,"Word Merge Complete")
-	capture($screenfolder)
+	capture($logfile,$screenfolder)
 
 
 EndFunc
@@ -121,10 +121,10 @@ Func startmerge($logfile,$screenfolder);
 	WinActivate($hWnd)
 	sleep(10000)
 	_FileWriteLog($logfile,"Main Menu Screen")
-	capture($screenfolder)
+	capture($logfile,$screenfolder)
 	key("M")
 	_FileWriteLog($logfile,"Word Merge Started")
-	capture($screenfolder)
+	capture($logfile,$screenfolder)
 
 EndFunc
 

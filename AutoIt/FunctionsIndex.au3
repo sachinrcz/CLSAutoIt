@@ -16,7 +16,7 @@ Func startIndex($logfile,$screenfolder) ;
 		   EndIf
 	   WinActivate($hWnd)
 	   _FileWriteLog($logfile,"On Main Screen")
-	   capture($screenfolder)
+	   capture($logfile,$screenfolder)
 	   key("41S1R")
 	   key("{Enter}")
 	   WinActivate($hWnd)
@@ -24,7 +24,7 @@ Func startIndex($logfile,$screenfolder) ;
 		$i = StringInStr($sText, "EXIT_CM")
 		If $i > 0 Then
 			_FileWriteLog($logfile,"On User List Screen")
-			$screenfile = capture($screenfolder)
+			$screenfile = capture($logfile,$screenfolder)
 			$folder = StringSplit($screenfolder, "\")[5]
 			$txt = readImage($folder, $screenfile)
 			_FileWriteLog($logfile,$txt)
@@ -85,12 +85,12 @@ EndFunc
 	    _FileWriteLog($logfile,"Index Active")
 		sendUpdate($logfile,"last_update=Index Active")
 		;_FileWriteLog($logfile,$sText)
-	   capture($screenfolder)
+	   capture($logfile,$screenfolder)
 	   sleep(60000)
 	WEnd
 	_FileWriteLog($logfile,"Index Complete")
 	sendUpdate($logfile,"last_update=Index Complete")
-	capture($screenfolder)
+	capture($logfile,$screenfolder)
 EndFunc
 
 

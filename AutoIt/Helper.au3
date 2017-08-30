@@ -13,7 +13,7 @@ Func enterPassword($logfile,$screenfolder);
 	While 1
 	    If isCLSOpen($logfile,$screenfolder) Then
 		   _FileWriteLog($logfile,"Login Complete")
-		   capture($screenfolder)
+		   capture($logfile,$screenfolder)
 		   ExitLoop
 		EndIf
 		WinWait("Business Rules! Connect", "", 10)
@@ -36,12 +36,12 @@ Func enterPassword($logfile,$screenfolder);
 
 		If @error Then
 			 _FileWriteLog($logfile,"Login Complete")
-			capture($screenfolder)
+			capture($logfile,$screenfolder)
 		    ExitLoop
 		 Else
 			_FileWriteLog($logfile,"Login Failed")
 			sendUpdate($logfile,"last_update="& "Error in Password PopUp")
-		    capture($screenfolder)
+		    capture($logfile,$screenfolder)
 		EndIf
 
 
