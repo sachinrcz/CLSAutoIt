@@ -6,4 +6,4 @@ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\15 August"
 
 
 
-startIndex($logfile,$screenfolder)
+Local $hWnd = WinGetHandle("Business Rules! Connect")

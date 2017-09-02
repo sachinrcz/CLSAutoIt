@@ -290,7 +290,7 @@ Func closeXLS();
  EndFunc
 
 
-Function waitAssignmentComplete($logfile,$screenfolder) ;
+Func waitAssignmentComplete($logfile,$screenfolder) ;
    _FileWriteLog($logfile,"Wait Assignment Complete")
 	WinWait("CM-8.7", "", 30)
 	Local $hWnd = WinGetHandle("CM-8.7")

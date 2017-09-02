@@ -3,8 +3,8 @@
 
 Local $logfile = $CmdLine[1]
 Local $screenfolder = $CmdLine[2]
-;~ Local $logfile = "S:\Sachin\C2\OvernightLogs\11 August\AI_Watcher_2017_08_11.log"
-;~ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\11 August"
+;~ Local $logfile = "S:\Sachin\C2\OvernightLogs\31 August\AI_Watcher_2017_08_31.log"
+;~ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\31 August"
 
 sendUpdate($logfile,"last_update="& "NonCourtOpt New Claim")
 Local $iPID = Run("F:\CLSInc\WBWIN\BRClient64.exe")

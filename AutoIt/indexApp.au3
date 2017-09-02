@@ -14,17 +14,17 @@ If startIndex($logfile,$screenfolder) Then
    pressKey($logfile,"y{Enter}")
    sendUpdate($logfile,"index_run="& "Yes")
    watchIndex($logfile,$screenfolder)
-   useCMD($logfile)
+
 Else
    _FileWriteLog($logfile,"Index Skipped")
    sendUpdate($logfile,"index_run="& "No Index run due to excess user in system")
+EndIf
    useCMD($logfile)
-
    Run(@ScriptDir & "\BatchFiles\DELETE_EXIT_CM.bat")
    Run(@ScriptDir & "\BatchFiles\BATCH_EXPORT.bat")
    enterPassword($logfile, $screenfolder)
 ;~    Run(@ScriptDir & "\BatchFiles\Password.exe")
 
-EndIf
+
 
  _FileWriteLog($logfile,"Index Module End")
