@@ -10,7 +10,7 @@ Func readImage($folder , $screenfile);
 
 _FileWriteLog($logfile,"Attempting to read image")
 $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
-$url = "http://192.168.147.44:8000/dashboard-api/ocr/" & $folder & "/" & $screenfile
+$url = "http://automationvm01.eltmanlaw.com/dashboard-api/ocr/" & $folder & "/" & $screenfile
 _FileWriteLog($logfile,"Request URL:  "& $url )
 $oHTTP.Open("GET", $url, False)
 
@@ -30,7 +30,7 @@ EndFunc
 Func getActive($logfile);
 _FileWriteLog($logfile,"Getting Active Dashboard ID")
 $oHTTP = ObjCreate("winhttp.winhttprequest.5.1")
-$oHTTP.Open("GET", "http://192.168.147.44:8000/dashboard-api/active/", False)
+$oHTTP.Open("GET", "http://automationvm01.eltmanlaw.com/dashboard-api/active/", False)
 
 $oHTTP.Send()
 $oReceived = $oHTTP.ResponseText
@@ -59,7 +59,7 @@ EndFunc
 
 
 Func sendUpdate($logfile,$msg);
-   $localuri = "http://192.168.147.44:8000/dashboard-api/"
+   $localuri = "http://automationvm01.eltmanlaw.com/dashboard-api/"
    $uri = "http://eec.mymailing.website/dashboard-api/"
    put_update($localuri,$logfile,$msg)
    put_update($uri,$logfile,$msg)

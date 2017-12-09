@@ -1,14 +1,14 @@
 
 #include <Helper.au3>
 
-;~ Local $logfile = "S:\Sachin\C2\OvernightLogs\30 August\AI_Watcher_2017_08_30.log"
-;~ Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\30 August"
-;~ Local $editype = "NonCourtOpt"
-Local $logfile = $CmdLine[1]
-Local $screenfolder = $CmdLine[2]
-Local $editype = $CmdLine[3]
+Local $logfile = "S:\Sachin\C2\OvernightLogs\15 September\AI_Watcher_2017_09_15.log"
+Local $screenfolder = "S:\Sachin\C2\OvernightScreenshots\15 September"
+Local $editype = "NonCourtOpt II "
+;~ Local $logfile = $CmdLine[1]
+;~ Local $screenfolder = $CmdLine[2]
+;~ Local $editype = $CmdLine[3]
 ;~ sendUpdate($logfile,"last_update=Watcher activated")
-enterPassword($logfile , $screenfolder)
+;~ enterPassword($logfile , $screenfolder)
 sendUpdate($logfile,"last_update="& $editype & " started")
 watch()
 

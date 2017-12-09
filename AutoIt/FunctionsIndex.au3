@@ -30,7 +30,27 @@ Func startIndex($logfile,$screenfolder) ;
 			_FileWriteLog($logfile,$txt)
 			$users = getUserNumber($logfile, $txt)
 			$deboo = StringInStr($txt, "jdeboo")
-			if $users > 2  Then
+			$fb = StringInStr($txt, "fbeck")
+			_FileWriteLog($logfile,"No of Users: "+$users)
+			_FileWriteLog($logfile,"Index of josh: "+$deboo)
+			_FileWriteLog($logfile,"Index of fb: "+$fb)
+
+			If ($users > 3) Then
+
+				   _FileWriteLog($logfile,"Excess users in system. Not starting Index")
+					 moveToErrorFolder($logfile,$screenfolder,$folder, $screenfile)
+				    WinActivate($hWnd)
+					key("{Esc}")
+					key("{Esc}")
+					return False
+			ElseIf (($users == 2 And ($deboo > 0 or $fb>0)) Or ($users ==1) Or ($users == 3 And ($deboo > 0 And $fb>0))) Then
+		 ;~ 			   MsgBox($MB_SYSTEMMODAL, "","Ok to start Index")
+						_FileWriteLog($logfile,"Ok to start Index")
+						WinActivate($hWnd)
+						key("{Esc}")
+						key("191")
+						return True
+			EndIf
 ;~ 				 	MsgBox($MB_SYSTEMMODAL, "","Excess users in system. Not starting Index")
 				   _FileWriteLog($logfile,"Excess users in system. Not starting Index")
 					 moveToErrorFolder($logfile,$screenfolder,$folder, $screenfile)
@@ -38,14 +58,6 @@ Func startIndex($logfile,$screenfolder) ;
 					key("{Esc}")
 					key("{Esc}")
 					return False
-			ElseIf ($users == 2 And $deboo > 0) Or ($users ==1) Then
-;~ 			   MsgBox($MB_SYSTEMMODAL, "","Ok to start Index")
-			   _FileWriteLog($logfile,"Ok to start Index")
-			   WinActivate($hWnd)
-			   key("{Esc}")
-			   key("191")
-			   return True
-			EndIf
 
 		 Else
 			MsgBox($MB_SYSTEMMODAL, "","Not on user list window")
@@ -74,10 +86,10 @@ EndFunc
 	   WinWait("CM-8.7", "", 30)
 	   Local $hWnd = WinGetHandle("CM-8.7")
 		   If @error Then
-			   Run(@ScriptDir & "\BatchFiles\DELETE_EXIT_CM.bat")
-			   Run(@ScriptDir & "\BatchFiles\BATCH_EXPORT.bat")
+;~ 			   Run(@ScriptDir & "\BatchFiles\DELETE_EXIT_CM.bat")
+;~ 			   Run(@ScriptDir & "\BatchFiles\BATCH_EXPORT.bat")
 ;~ 			   Run(@ScriptDir & "\BatchFiles\Password.exe")
-			   enterPassword($logfile, $screenfolder)
+;~ 			   enterPassword($logfile, $screenfolder)
 			   ExitLoop
 		   EndIf
 	   WinActivate($hWnd)
